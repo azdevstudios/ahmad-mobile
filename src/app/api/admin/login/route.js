@@ -54,7 +54,7 @@ export async function POST(request) {
       );
     }
 
-    const admin = await Admin.findOne({ email, role: "admin" }).select("+password sessionVersion");
+    const admin = await Admin.findOne({ email, role: "admin" }).select("+password name email role sessionVersion");
     const passwordValid = admin ? await bcrypt.compare(body.password, admin.password) : false;
 
     if (!admin || !passwordValid) {

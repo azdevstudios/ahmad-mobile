@@ -17,7 +17,7 @@ export async function POST(request) {
 
   try {
     await connectDB();
-    const admin = await Admin.findById(session.adminId).select("+password sessionVersion");
+    const admin = await Admin.findById(session.adminId).select("+password role sessionVersion");
     if (!admin) return unauthorizedAdminResponse();
     if (!(await bcrypt.compare(body.currentPassword, admin.password))) {
       return NextResponse.json({ success: false, message: "Your current password is incorrect." }, { status: 400 });
