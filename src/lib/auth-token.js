@@ -10,16 +10,24 @@ export function getAuthKey() {
 
 export async function verifyAdminToken(token) {
   const key = getAuthKey();
-  if (!token || !key) return null;
+  if (!token) return null;
+  if (!key) {
+    console.error("Admin session verification failed: AUTH_SECRET is missing or too short in this runtime.");
+    return null;
+  }
   try {
     const { payload } = await jwtVerify(token, key, {
       algorithms: ["HS256"],
       issuer: ADMIN_SESSION_ISSUER,
       audience: ADMIN_SESSION_AUDIENCE,
     });
-    if (!payload.sub || payload.role !== "admin" || !Number.isSafeInteger(payload.sessionVersion)) return null;
+    if (!payload.sub || payload.role !== "admin" || !Number.isSafeInteger(payload.sessionVersion)) {
+      console.error("Admin session verification failed: token claims are invalid.");
+      return null;
+    }
     return { adminId: payload.sub, role: payload.role, sessionVersion: payload.sessionVersion };
-  } catch {
+  } catch (error) {
+    console.error("Admin session verification failed:", error?.code || error?.name || "unknown token error");
     return null;
   }
 }
