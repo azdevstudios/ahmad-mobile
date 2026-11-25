@@ -1,0 +1,92 @@
+
+@import "tailwindcss";
+
+/* Enable class-based dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* =================================
+   LIGHT THEME
+================================= */
+
+:root {
+  color-scheme: light;
+
+  --background: #fafafa;
+  --surface: #ffffff;
+  --foreground: #111827;
+  --secondary: #4b5563;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --accent: #1d4ed8;
+}
+
+/* =================================
+   DARK THEME
+================================= */
+
+.dark {
+  color-scheme: dark;
+
+  --background: #09090b;
+  --surface: #151518;
+  --foreground: #f4f4f5;
+  --secondary: #a1a1aa;
+  --muted: #71717a;
+  --border: #27272a;
+  --accent: #8295b0;
+}
+
+/* =================================
+   TAILWIND THEME
+================================= */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-secondary: var(--secondary);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+
+  --font-sans: var(--font-dm);
+  --font-heading: var(--font-jakarta);
+  --font-mono: var(--font-jetbrains);
+}
+
+/* =================================
+   GLOBAL STYLES
+================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-dm), sans-serif;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--accent);
+  color: #ffffff;
+}
